@@ -2,18 +2,22 @@ import React from 'react';
 import axios from 'axios';
 import BookCarousel from './BookCarousel';
 import { Carousel } from 'react-bootstrap';
+import library1 from './img/library1.jpg';
 
 
 class BestBooks extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      books: []
+      books: [],
+      image: []
     }
   }
 
   componentDidMount() {
     this.fetchBooks();
+    // link to unsplash API
+    // this.fetchImage()
   }
 
   async fetchBooks() {
@@ -27,6 +31,21 @@ class BestBooks extends React.Component {
     } catch (err) { console.log(err) }
   }
 
+  // Tester code
+  // function ImageCycle() {
+  //   const [index, setIndex] = useState(1);
+  
+  //   const handleClick = () => {
+  //     setIndex(index => index % 3 + 1);
+  //   };
+  
+  //   const imageUrl = `library${index}.jpg`;
+  
+  //   return (
+  //     <img src={imageUrl} onClick={handleClick} alt="Cycle" />
+  //   );
+  // }
+
   /* TODO: Make a GET request to your API to fetch all the books from the database  */
 
   render() {
@@ -39,14 +58,14 @@ class BestBooks extends React.Component {
 
         {this.state.books.length > 0 ? (
           <Carousel>
-            <img
-              className="d-block w-100"
-              src="https://via.placeholder.com/100"
-              alt="First slide"
-            />
             {this.state.books.map((book, id) => {
               return (
                 <Carousel.Item key={id}>
+                  <img
+                    className="d-block w-100"
+                    src={library1}
+                    alt="First slide"
+                  />
                   <BookCarousel book={book} />
                 </Carousel.Item>
               )
