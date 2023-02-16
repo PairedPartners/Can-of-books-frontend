@@ -96,7 +96,6 @@ class BestBooks extends React.Component {
         ) : (
           <h3>No Books Found :(</h3>
         )}
-        <Button onClick={this.deleteBooks}>Delete Book</Button>
       </>
     )
   }
