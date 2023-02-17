@@ -13,7 +13,8 @@ class BookCarousel extends React.Component {
                     <p>{this.props.book.genre}</p>
                     <p>{this.props.book.description}</p>
                     <p>{this.props.book.status}</p>
-                    <Button onClick={() => this.props.deleteBooks(this.props.book._id)} type = "submit">Delete Book</Button>
+                    <Button onClick={() => this.props.deleteBooks(this.props.book._id)                   
+                    } type = "submit">Delete Book</Button>
                 </Carousel.Caption>
                 {/* </Carousel.Item> */}
             </>

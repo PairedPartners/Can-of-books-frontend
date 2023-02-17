@@ -19,7 +19,9 @@ class AddForm extends React.Component {
 
   render() {
     return (
+      // Change container to Modal
       <Container>
+        {/* All this is Modal Body */}
         <Form onSubmit={this.handleSubmit}>
           <Form.Group controlId="title">
             <Form.Label>Book Title</Form.Label>
