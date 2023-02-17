@@ -15,14 +15,17 @@ class App extends React.Component {
       <>
         <Router>
           <Header />
-          
           <Routes>
             <Route 
               exact path="/"
               element={<BestBooks />}
             >
             </Route>
-            {/* PLACEHOLDER: add a route with a path of '/about' that renders the `About` component */}
+            <Route
+            path="/about"
+            element={<div>Hook me up!</div>}
+          >
+            </Route>
           </Routes>
           <Footer />
         </Router>
