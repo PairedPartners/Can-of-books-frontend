@@ -10,7 +10,8 @@ class BestBooks extends React.Component {
     super(props);
     this.state = {
       books: [],
-      image: []
+      image: [],
+      showModal: false
     }
   }
 
@@ -51,6 +52,31 @@ class BestBooks extends React.Component {
     }
     catch (err) { console.error(err) }
   }
+
+  handleModal = () => {
+    this.setState({
+      showModal: true
+    })
+  }
+
+  // closeModal = () => {
+  //   console.log('testing');
+  //   this.setState({ showModal: false }, () => console.log(this.state.showModal))
+  //   console.log('after setting state')
+  //   // this.setState({
+
+  //   //   showModal: false
+
+  //   // },
+  //   //   () => console.log(this.state.showModal)
+  //   // )
+  // }
+
+  closeModal = () => {
+    this.setState({
+      showModal: false
+    });
+  }
   // Tester code
   // function ImageCycle() {
   //   const [index, setIndex] = useState(1);
@@ -75,7 +101,10 @@ class BestBooks extends React.Component {
     return (
       <>
         <h2>My Library &amp; Bookshelf</h2>
-        <AddForm postBooks={this.postBooks}/>
+        <Button onClick={this.handleModal}>
+          Add Book
+          <AddForm postBooks={this.postBooks} showModal={this.state.showModal} closeModal={this.closeModal} />
+        </Button>
         {this.state.books.length > 0 ? (
           <Carousel>
             {this.state.books.map((book, id) => {
@@ -85,13 +114,13 @@ class BestBooks extends React.Component {
                     className="d-block w-100"
                     src={library1}
                     alt="First slide"
-                    />
-                  <BookCarousel book={book} deleteBooks = {this.deleteBooks} />
-                    
+                  />
+                  <BookCarousel book={book} deleteBooks={this.deleteBooks} />
+
                 </Carousel.Item>
               )
             })}
-          
+
           </Carousel>
         ) : (
           <h3>No Books Found :(</h3>
