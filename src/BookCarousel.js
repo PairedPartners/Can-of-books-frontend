@@ -4,7 +4,7 @@ import {Button} from "react-bootstrap";
 
 class BookCarousel extends React.Component {
     render() {
-        console.log(this.props.book.title);
+        // console.log(this.props.book.title);
         return (
             <>
                 {/* <Carousel.Item key={this.props.book._id}> */}
