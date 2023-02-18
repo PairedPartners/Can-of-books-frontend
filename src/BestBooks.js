@@ -4,6 +4,7 @@ import BookCarousel from './BookCarousel';
 import { Button, Carousel } from 'react-bootstrap';
 import library1 from './img/library1.jpg';
 import AddForm from "./AddForm";
+// import UpdateModal from "./UpdateModal"
 
 class BestBooks extends React.Component {
   constructor(props) {
@@ -11,7 +12,9 @@ class BestBooks extends React.Component {
     this.state = {
       books: [],
       image: [],
-      showModal: false
+      showModal: false,
+      showUpdateModal: false,
+      bookToUpdate: {}
     }
   }
 
@@ -53,6 +56,17 @@ class BestBooks extends React.Component {
     catch (err) { console.error(err) }
   }
 
+  putBook = async (updatedBooks) => {
+    console.log(updatedBooks);
+    try {
+      let url = `${process.env.REACT_APP_SERVER}/books/${updatedBooks._id}`;
+      await axios.put(url, updatedBooks);
+      const updatedBooksArr = this.state.books.map(oldBook => updatedBooks._id === oldBook._id ? updatedBooks : oldBook);
+      this.setState({ books: updatedBooksArr });
+    }
+    catch (err) { console.error(err) }
+  }
+
   handleModal = () => {
     this.setState({
       showModal: true
@@ -77,6 +91,10 @@ class BestBooks extends React.Component {
       showModal: false
     });
   }
+
+  handleUpdateModal = (book) => this.setState({ showUpdateModal: true, bookToUpdate: book }, console.log("hello", this.state.showModal))
+  closeUpdateModal = () => this.setState({ showUpdateModal: false }, console.log("I should be closed"))
+
   // Tester code
   // function ImageCycle() {
   //   const [index, setIndex] = useState(1);
@@ -103,7 +121,12 @@ class BestBooks extends React.Component {
         <h2>My Library &amp; Bookshelf</h2>
         <Button onClick={this.handleModal}>
           Add Book
-          <AddForm postBooks={this.postBooks} showModal={this.state.showModal} closeModal={this.closeModal} />
+          {this.state.showModal && (
+            <AddForm
+              postBooks={this.postBooks}
+              showModal={this.state.showModal}
+              closeModal={this.closeModal} />
+          )}
         </Button>
         {this.state.books.length > 0 ? (
           <Carousel>
@@ -115,11 +138,24 @@ class BestBooks extends React.Component {
                     src={library1}
                     alt="First slide"
                   />
-                  <BookCarousel book={book} deleteBooks={this.deleteBooks} />
-
+                  <BookCarousel
+                    book={book}
+                    deleteBooks={this.deleteBooks}
+                    putBook={this.putBook}
+                    handleUpdateModal={this.handleUpdateModal}
+                    closeUpdateModal={this.closeUpdateModal}
+                    bookToUpdate={this.state.bookToUpdate}
+                    showModal={this.state.showUpdateModal}
+                  />
                 </Carousel.Item>
               )
             })}
+            {/* <UpdateModal
+                    handleUpdateModal={this.handleUpdateModal}
+                    closeUpdateModal={this.closeUpdateModal}
+                    bookToUpdate={this.props.bookToUpdate}
+                    putBook={this.props.putBook}
+                /> */}
 
           </Carousel>
         ) : (

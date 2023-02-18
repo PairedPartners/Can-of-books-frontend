@@ -2,7 +2,11 @@ import React from "react";
 import { Button, Modal, Form } from "react-bootstrap";
 
 class AddForm extends React.Component {
-
+  closeModal = () => {
+    this.setState({
+      showModal: false
+    });
+  }
   handleSubmit = (e) => {
     e.preventDefault();
     console.log("Heyo look at me for add book");
@@ -17,6 +21,7 @@ class AddForm extends React.Component {
     this.props.closeModal();
     this.props.postBooks(newBook);
   }
+
 
   handleClose = (e) => {
     this.props.closeModal()
