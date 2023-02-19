@@ -24,34 +24,6 @@ class AddForm extends React.Component {
 
   render() {
     return (
-<<<<<<< HEAD
-      // Change container to Modal
-      <Container>
-        {/* All this is Modal Body */}
-        <Form onSubmit={this.handleSubmit}>
-          <Form.Group controlId="title">
-            <Form.Label>Book Title</Form.Label>
-            <Form.Control type="text" placeholder="Book title goes here..." />
-          </Form.Group>
-
-          <Form.Group controlId="genre">
-            <Form.Label>Book's Genre</Form.Label>
-            <Form.Control type="text" placeholder="What genre fits this book?" />
-          </Form.Group>
-
-          <Form.Group controlId="description">
-            <Form.Label>Book's Description</Form.Label>
-            <Form.Control type="text" placeholder="What is this book about?" />
-          </Form.Group>
-
-          <Form.Group controlId="status">
-          <Form.Label>Book's Status</Form.Label>
-            <Form.Control type="text" placeholder="Is this book read? In progress? Want to be read?" />
-          </Form.Group>
-          <Button type="submit">Add Book</Button>
-        </Form>
-      </Container>
-=======
       <Modal show={this.props.showModal} onHide={this.handleClose}>
         <Modal.Header>
           <Modal.Title>Add a Book</Modal.Title>
@@ -81,7 +53,6 @@ class AddForm extends React.Component {
           </Form>
         </Modal.Body>
       </Modal>
->>>>>>> 1e45fd6ea0b2a978ff587252459f4477072d5c4a
     )
   }
 }
