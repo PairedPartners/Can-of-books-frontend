@@ -4,6 +4,7 @@ import BookCarousel from './BookCarousel';
 import { Button, Carousel } from 'react-bootstrap';
 import library1 from './img/library1.jpg';
 import AddForm from "./AddForm";
+import { withAuth0 } from '@auth0/auth0-react';
 // import UpdateModal from "./UpdateModal"
 
 class BestBooks extends React.Component {
@@ -18,10 +19,27 @@ class BestBooks extends React.Component {
     }
   }
 
-  componentDidMount() {
-    this.fetchBooks();
-    // link to unsplash API
-    // this.fetchImage()
+  async componentDidMount() {
+    try {
+      if (this.props.auth0.isAuthenticated) {
+        const res = await this.props.auth0.getIdTokenClaims();
+        const jwt = res.__raw;
+        // Alternate: Using just config file
+        // const config = {
+        //   headers: { "Authorization": `Bearer ${jwt}` },
+        //   method: 'get',
+        //   url: `${process.env.REACT_APP_SERVER}/books`
+        // }
+        // const bookData = await axios(config);
+        // this.setState({books: bookData.data});
+        const config = {
+          headers: { "Authorization": `Bearer ${jwt}` }
+        }
+        const bookData = await axios(`${process.env.REACT_APP_SERVER}/books`, config);
+        this.setState({ books: bookData.data });
+      }
+    }
+    catch (err) { console.error(err) }
   }
 
   async fetchBooks() {
@@ -36,11 +54,18 @@ class BestBooks extends React.Component {
 
   postBooks = async (newBook) => {
     try {
-      let url = `${process.env.REACT_APP_SERVER}/books`;
-      const response = await axios.post(url, newBook)
-      console.log(response.data);
-      //Using elipses/spread to copy over old data and add new book into new array
-      this.setState({ books: [...this.state.books, response.data] })
+      if (this.props.auth0.isAuthenticated) {
+        const res = await this.props.auth0.getIdTokenClaims();
+        const jwt = res.__raw;
+        const config = {
+          headers: { "Authorization": `Bearer ${jwt}` }
+        }
+        let url = `${process.env.REACT_APP_SERVER}/books`;
+        const response = await axios.post(url, newBook, config)
+        console.log(response.data);
+        //Using elipses/spread to copy over old data and add new book into new array
+        this.setState({ books: [...this.state.books, response.data] })
+      }
     }
     catch (err) { console.error(err) }
   }
@@ -166,4 +191,4 @@ class BestBooks extends React.Component {
   }
 }
 
-export default BestBooks;
+export default withAuth0(BestBooks);
