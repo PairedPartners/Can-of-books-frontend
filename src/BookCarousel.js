@@ -27,6 +27,7 @@ class BookCarousel extends React.Component {
                     <Button onClick={() => this.props.handleUpdateModal(this.props.book)} type="submit">Update Book</Button>
 
                     <Button onClick={() => this.props.deleteBooks(this.props.book._id)} type="submit">Delete Book</Button>
+
                 </Carousel.Caption>
                 {this.props.showModal && (
                     <UpdateModal
